@@ -305,6 +305,17 @@ AddEventHandler('gcPhone:sendMessage', function(phoneNumber, message)
 	xPlayer = ESX.GetPlayerFromId(_source)
     identifier = xPlayer.identifier
     addMessage(sourcePlayer, identifier, phoneNumber, message)
+
+    if Config.UseMdt then
+        local playerPed = GetPlayerPed(_source)
+        local coords = GetEntityCoords(playerPed)
+        local player = ESX.GetPlayerFromId(_source)
+        local playerName = player.getName(_source)
+
+        if phoneNumber == 'police' then
+            TriggerEvent("mdt:newCall", message, playerName, vector3(coords.x, coords.y, coords.z))
+        end
+    end
 end)
 
 RegisterServerEvent('gcPhone:deleteMessage')
